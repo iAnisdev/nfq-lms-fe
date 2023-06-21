@@ -3,19 +3,21 @@ import { store } from "@/store/store";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import dynamic from "next/dynamic";
+import { SessionProvider  } from "next-auth/react"
+import RootLayout from "@/layouts/RootLayout"
 
-const RootLayout = dynamic(()=> import("@/layouts/RootLayout") , {
-  ssr: false
-})
 
 function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
+
   return (
-    <RootLayout>
+    <SessionProvider>
+      <RootLayout>
         <Provider store={store}>
           <Component {...pageProps} />
         </Provider>
-    </RootLayout>
+      </RootLayout>
+    </SessionProvider>
   );
 }
 
